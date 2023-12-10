@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- IMPORT SCRIPTS AND STYLES -->
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="./node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./node_modules/axios/dist/axios.min.js"></script>
+    <script src="./mainLogic.js" defer></script>
+    <script src="./postDetails.js" defer></script>
+  </head>
+  <body>
+    <!--======= LOADER =======-->
+    <div id="loader">
+      <div class="lds-roller">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <!--=======// LOADER //=======-->
+    <!-- ======= MODALS ======= -->
+    <!-- LOGIN MODAL -->
+
+    <div
+      class="modal fade"
+      id="login-modal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Login</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="username-input"
+                  placeholder="Username"
+                  value="Elmokdad1"
+                />
+                <label for="username-input">Username</label>
+              </div>
+              <div id="password-div" class="form-floating">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password-input"
+                  placeholder="Password"
+                  value="123456"
+                />
+                <i class="bi bi-eye"></i>
+                <label for="password-input">Password</label>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-success"
+              onclick="loginBtnClicked()"
+            >
+              Login
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--// LOGIN MODAL //-->
+
+    <!-- REGISTER MODAL -->
+
+    <div
+      class="modal fade"
+      id="register-modal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Register A New User
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-floating mb-3">
+                <input
+                  type="file"
+                  class="form-control"
+                  id="register-image-input"
+                  placeholder="Profile Image"
+                />
+                <label for="register-image-input">Profile Image</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="register-name-input"
+                  placeholder="Name"
+                  value="Elmokdad1"
+                />
+                <label for="register-name-input">Name</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="register-username-input"
+                  placeholder="Username"
+                  value="Elmokdad1"
+                />
+                <label for="register-username-input">Username</label>
+              </div>
+              <div class="form-floating">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="register-password-input"
+                  placeholder="Password"
+                  value="123456"
+                />
+                <label for="register-password-input">Password</label>
+              </div>
+              <div class="input-group mb-3">
+                <input
+                  type="email"
+                  class="form-control"
+                  id="register-email-input"
+                  placeholder="Email"
+                  aria-label="Recipient's username"
+                  aria-describedby="basic-addon2"
+                />
+                <span class="input-group-text" id="basic-addon2"
+                  >@example.com</span
+                >
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-success"
+              onclick="registerBtnClicked()"
+            >
+              Register
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--// REGISTER MODAL //-->
+
+    <!-- CREATE POST MODAL -->
+
+    <div
+      class="modal fade"
+      id="create-post-modal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Create A New Post
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <div class="form-floating mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="post-title-input"
+                    placeholder="Something"
+                  />
+                  <label for="post-title-input">Title</label>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="form-floating">
+                  <textarea
+                    class="form-control"
+                    placeholder="Discrip Your Post"
+                    id="post-body-input"
+                    style="height: 100px; resize: none"
+                  ></textarea>
+                  <label for="post-body-input">Discription</label>
+                </div>
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  type="file"
+                  class="form-control"
+                  id="post-image-input"
+                  placeholder="Something"
+                />
+                <label for="post-image-input">Image</label>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="createNewPostClicked()"
+            >
+              Create
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--// CREATE POST MODAL //-->
+    <!--//======= MODALS =======//-->
+
+    <!-- =============== ALERTS =============== -->
+    <div id="success-alert" class="fade show"></div>
+
+    <!-- NAVIGATION BAR CONT -->
+    <div class="container">
+      <div class="d-flex justify-content-center">
+        <div class="col-9">
+          <nav
+            class="navbar navbar-expand-lg bg-body-tertiary shadow rounded pt-3"
+          >
+            <div class="container-fluid">
+              <a class="navbar-brand" href="home.html">Hello</a>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="home.html"
+                      >Home</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" onclick="profileClicked()" style="cursor: pointer;">Profile</a>
+                  </li>
+                </ul>
+                <!-- NON-LOGGED IN USER -->
+                <div
+                  id="logged-in-div"
+                  class="d-flex w-100 justify-content-end"
+                >
+                  <button
+                    id="login-btn"
+                    type="button"
+                    class="btn btn-outline-success mx-2"
+                    data-bs-toggle="modal"
+                    data-bs-target="#login-modal"
+                  >
+                    Login
+                  </button>
+                  <button
+                    id="register-btn"
+                    type="button"
+                    class="btn btn-outline-success"
+                    data-bs-toggle="modal"
+                    data-bs-target="#register-modal"
+                  >
+                    Register
+                  </button>
+                </div>
+                <!--// NON-LOGGED IN USER //-->
+                <!-- FOR LOGGED IN USER -->
+                <div
+                  id="logout-div"
+                  class="d-flex w-100 justify-content-end align-items-center"
+                >
+                  <img
+                    id="nav-user-image"
+                    class="rounded-circle"
+                    style="width: 40px; height: 40px"
+                    src="./profile_pics/user-pic.png"
+                    alt="./profile_pics/user-pic.png"
+                  />
+                  <b id="nav-username"> @Elmokdad55 </b>
+                  <button
+                    onclick="logout()"
+                    id="logout-btn"
+                    type="button"
+                    class="btn btn-outline-danger mx-2"
+                  >
+                    Logout
+                    <i class="bi bi-box-arrow-right mx-1 lh-sm fs-5"></i>
+                  </button>
+                </div>
+                <!--// FOR LOGGED IN USER //-->
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <!--// NAVIGATION BAR CONT //-->
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+      <!-- USER'S POST -->
+      <div class="row d-flex justify-content-center mt-5">
+        <div class="col-9">
+          <h1>
+            <span id="username-span"> Elmokdad's </span>
+            Post
+          </h1>
+        </div>
+      </div>
+      <!-- POST ROW -->
+      <!-- POST -->
+      <div class="row d-flex justify-content-center mt-5">
+        <div class="col-lg-9" id="post">
+          <!-- POST CARD -->
+          <div class="card shadow">
+            <div class="card-header">
+              <img
+                class="user-pic rounded-circle border border-3"
+                src="./profile_pics/user-pic.png"
+                alt=""
+                style="width: 40px; height: 40px"
+              />
+              <b>@Elmokdad</b>
+            </div>
+            <div class="card-body">
+              <img
+                class="w-100"
+                src="./placeholders/friends-toasting-terrace-party.jpg"
+                alt=""
+              />
+              <h6 style="color: rgb(193, 193, 193)" class="mt-1">2 min ago</h6>
+              <h4>Hello User</h4>
+              <p>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam,
+                tempore in rem pariatur, eos quam corrupti assumenda fugiat vel
+                nulla aut aliquid sit? Quis, aliquam architecto saepe porro vero
+                tenetur.
+              </p>
+              <hr />
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-pen"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"
+                  />
+                </svg>
+                <span> (3) Comments </span>
+              </div>
+            </div>
+            <!-- COMMENTS -->
+            <div id="comments">
+              <!-- COMMENT -->
+              <div class="p-3" style="background-color: rgb(187, 187, 187)">
+                <!-- PROFILE PIC + USERNAME -->
+                <div>
+                  <img
+                    src="./profile_pics/user-pic.png"
+                    class="rounded-cicle"
+                    alt=""
+                    style="width: 40px; height: 40px"
+                  />
+                  <b>@Elmokdad1</b>
+                </div>
+                <!--// PROFILE PIC + USERNAME //-->
+                <!-- COMMENT'S BODY -->
+                <div>
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                  Possimus modi, eveniet quis placeat quos, ea quibusdam quae
+                  dignissimos voluptates nobis dolor, quam magnam mollitia minus
+                  enim facere natus ad et.
+                </div>
+                <!--// COMMENT'S BODY //-->
+              </div>
+              <!--// COMMENT //-->
+            </div>
+            <!-- COMMENTS -->            
+          </div>
+          <!--// POST CARD //-->
+        </div>
+      </div>
+      <!--// POST //-->
+      <!--// POST ROW //-->
+    </div>
+  </body>
+</html>
